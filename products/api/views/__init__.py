@@ -1,0 +1,1 @@
+from products.api.views.product_list_viewset import ProductListViewSet
