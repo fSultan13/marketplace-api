@@ -10,4 +10,14 @@ urlpatterns = [
 
     path('api-auth/', include('rest_framework.urls')),
 
+    path(
+        "api/",
+        include(
+            [
+                # Apps endpoints
+                path("", include("products.api.urls")),
+            ]
+        ),
+    ),
+
 ]
