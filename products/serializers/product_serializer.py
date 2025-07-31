@@ -47,6 +47,8 @@ class ProductSerializer(serializers.ModelSerializer):
     sizes = SizesFromProductSerializer(many=True)
     subtypes = SubtypeFromProductSerializer(many=True)
     attributes = AttributesFromProductSerializer(many=True)
+    type = serializers.CharField(source='type.name')
+    brand = serializers.CharField(source='brand.name')
 
     class Meta:
         model = Product
