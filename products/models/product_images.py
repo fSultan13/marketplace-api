@@ -4,14 +4,14 @@ from products.models.products import Product
 from utils import generate_file_name
 
 
+def product_upload_to(instance, filename):
+    return f'products/images/{instance.product.slug}/{generate_file_name(filename)}'
+
+
 class ProductImages(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
 
-    @staticmethod
-    def upload_to(instance, filename):
-        return f'products/images/{instance.product.slug}/{generate_file_name(filename)}'
-
-    image = models.ImageField(upload_to=upload_to)
+    image = models.ImageField(upload_to=product_upload_to)
 
     is_preview = models.BooleanField(default=False)
 

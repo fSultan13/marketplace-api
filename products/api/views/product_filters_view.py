@@ -7,19 +7,16 @@ from rest_framework.views import APIView
 from products.models import Brand, ProductType
 from products.serializers import ProductFiltersSerializer
 
+
 @extend_schema(
     summary="Список доступных фильтров и сортировок для товаров",
     description=(
-        "Этот эндпоинт возвращает:\n"
-        "- Список всех типов товаров и их подтипов для фильтрации\n"
-        "- Список всех брендов для фильтрации\n"
-        "- Список доступных вариантов сортировки для товаров\n\n"
-        "Варианты сортировки (ordering):\n"
-        "  • `created_at` — сначала старые товары\n"
-        "  • `-created_at` — сначала новые товары\n"
-        "  • `price` — по возрастанию цены\n"
-        "  • `-price` — по убыванию цены\n\n"
-        "Используйте эти параметры в запросах к списку товаров (например, `/api/products/?ordering=-price`), чтобы управлять сортировкой."
+            "Этот эндпоинт возвращает:\n"
+            "- Список всех типов товаров и их подтипов для фильтрации\n"
+            "- Список всех брендов для фильтрации\n"
+            "- Список доступных вариантов сортировки для товаров\n\n"
+            "Варианты сортировки (ordering):\n"
+            "Используйте эти параметры в запросах к списку товаров (например, `/api/products/?ordering=-price`), чтобы управлять сортировкой."
     )
 )
 class ProductFiltersOrderingView(APIView):
@@ -43,18 +40,18 @@ class ProductFiltersOrderingView(APIView):
                     for p_type in ProductType.objects.all()
                 ],
                 "brands": [
-                    {
-                        "name": brand.name
-                    }
+                    brand.name
                     for brand in Brand.objects.all()
                 ],
-                "orderings":[
-                    {
-                        "name": "created_at",
-                        "name": "-created_at",
-                        "name": "price",
-                        "name": "-price",
-                    }
+                "orderings": [
+                    "created_at",
+                    "-created_at",
+                    "price",
+                    "-price",
+                    "views",
+                    "-views",
+                    "rating",
+                    "-rating",
                 ]
             }).data,
             status=status.HTTP_200_OK,

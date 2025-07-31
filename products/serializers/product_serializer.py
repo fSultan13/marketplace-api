@@ -57,6 +57,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "description",
             "price",
             "created_at",
+            "rating",
+            "views",
             "brand",
             "type",
             "slug",

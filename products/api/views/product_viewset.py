@@ -44,7 +44,7 @@ class ProductPagination(pagination.PageNumberPagination):
             "ordering",
             OpenApiTypes.STR,
             OpenApiParameter.QUERY,
-            description="Сортировка: price, -price, created_at, -created_at",
+            description="Сортировка: price, -price, created_at, -created_at, rating, -rating, views, -views,",
         ),
         OpenApiParameter(
             "page",
@@ -63,7 +63,7 @@ class ProductListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, views
 
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = ProductFilter
-    ordering_fields = ['price', 'created_at']
+    ordering_fields = ['price', 'created_at' , 'rating', 'views']
     ordering = ['price']
 
     pagination_class = ProductPagination

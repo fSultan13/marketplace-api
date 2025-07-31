@@ -1,5 +1,6 @@
 import uuid
 
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from slugify import slugify
 
@@ -12,6 +13,14 @@ class Product(models.Model):
     description = models.TextField()
     price = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
+    rating = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(5),
+        ]
+    )
+    views = models.BigIntegerField(default=0)
 
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='products')
     type = models.ForeignKey(ProductType, on_delete=models.PROTECT, related_name='products')
