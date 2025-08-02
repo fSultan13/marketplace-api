@@ -15,7 +15,7 @@ from products.serializers import ProductFiltersSerializer
             "- Список всех типов товаров и их подтипов для фильтрации\n"
             "- Список всех брендов для фильтрации\n"
             "- Список доступных вариантов сортировки для товаров\n\n"
-            "Варианты сортировки (ordering):\n"
+            "Варианты сортировки (ordering).\n"
             "Используйте эти параметры в запросах к списку товаров (например, `/api/products/?ordering=-price`), чтобы управлять сортировкой."
     )
 )
@@ -40,18 +40,27 @@ class ProductFiltersOrderingView(APIView):
                     for p_type in ProductType.objects.all()
                 ],
                 "brands": [
-                    brand.name
+                    {
+                        "name": brand.name
+                    }
                     for brand in Brand.objects.all()
                 ],
                 "orderings": [
-                    "created_at",
-                    "-created_at",
-                    "price",
-                    "-price",
-                    "views",
-                    "-views",
-                    "rating",
-                    "-rating",
+                    {
+                        "name": "created_at",
+                    },
+                    {
+                        "name": "price",
+                    },
+                    {
+                        "name": "-price",
+                    },
+                    {
+                        "name": "views",
+                    },
+                    {
+                        "name": "rating",
+                    },
                 ]
             }).data,
             status=status.HTTP_200_OK,
