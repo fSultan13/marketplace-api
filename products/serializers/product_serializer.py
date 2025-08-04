@@ -1,4 +1,5 @@
-from rest_framework import fields, serializers
+from rest_framework import serializers
+from rest_framework.fields import SerializerMethodField
 
 from products.models import Product, ProductSize, ProductImages, ProductsAttributeM2M
 
@@ -10,6 +11,12 @@ class ImagesFromProductSerializer(serializers.ModelSerializer):
             "image",
             "is_preview",
         ]
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if request is not None:
+            return request.build_absolute_uri(obj.image.url)
+        return obj.image.url
 
 
 class SizesFromProductSerializer(serializers.ModelSerializer):
@@ -30,6 +37,7 @@ class SubtypeFromProductSerializer(serializers.ModelSerializer):
             "name"
         ]
 
+
 class AttributesFromProductSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='attribute.name')
     unit = serializers.CharField(source='attribute.unit')
@@ -42,13 +50,18 @@ class AttributesFromProductSerializer(serializers.ModelSerializer):
             "unit"
         ]
 
+
 class ProductSerializer(serializers.ModelSerializer):
-    images = ImagesFromProductSerializer(many=True)
+    images = SerializerMethodField()
     sizes = SizesFromProductSerializer(many=True)
     subtypes = SubtypeFromProductSerializer(many=True)
     attributes = AttributesFromProductSerializer(many=True)
     type = serializers.CharField(source='type.name')
     brand = serializers.CharField(source='brand.name')
+
+    def get_images(self, obj) -> ImagesFromProductSerializer(many=True).data:
+        return ImagesFromProductSerializer(obj.images.all(), many=True,
+                                           context={'request': self.context["request"]}).data
 
     class Meta:
         model = Product
@@ -67,4 +80,3 @@ class ProductSerializer(serializers.ModelSerializer):
             "subtypes",
             "attributes",
         ]
-

@@ -5,7 +5,7 @@ from rest_framework import mixins, viewsets, pagination
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import AllowAny
 
-from products.models import Product, SubType
+from products.models import Product
 from products.serializers import ProductSerializer
 
 
@@ -59,11 +59,12 @@ class ProductListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, views
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
     lookup_field = 'slug'
 
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = ProductFilter
-    ordering_fields = ['price', 'created_at' , 'rating', 'views']
+    ordering_fields = ['price', 'created_at', 'rating', 'views']
     ordering = ['price']
 
     pagination_class = ProductPagination
