@@ -133,7 +133,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # DRF setting
-
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
@@ -154,8 +153,6 @@ REST_FRAMEWORK = {
 }
 
 # Swagger setting
-
-
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Marketplace-API',
     'DESCRIPTION': 'API для проекта торговой площадки',
