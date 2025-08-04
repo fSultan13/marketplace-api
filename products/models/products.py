@@ -13,7 +13,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    rating = models.IntegerField(
+    rating = models.FloatField(
         default=0,
         validators=[
             MinValueValidator(0),
