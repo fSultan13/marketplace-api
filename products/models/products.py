@@ -11,7 +11,10 @@ from products.models.product_types import ProductType
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    price = models.CharField(max_length=255)
+    price = models.DecimalField(
+        max_digits=12, decimal_places=2, null=False, blank=False, db_index=True
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     rating = models.FloatField(
         default=0,
