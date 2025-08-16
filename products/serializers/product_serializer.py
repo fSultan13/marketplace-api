@@ -1,3 +1,5 @@
+from decimal import Decimal, ROUND_HALF_UP
+
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
@@ -58,6 +60,14 @@ class ProductSerializer(serializers.ModelSerializer):
     attributes = AttributesFromProductSerializer(many=True)
     type = serializers.CharField(source='type.name')
     brand = serializers.CharField(source='brand.name')
+
+    price = serializers.SerializerMethodField()
+    def get_price(self, obj):
+        v = obj.price.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        if v == v.to_integral():
+            return str(v.to_integral())
+        return f"{v:.2f}"
+
 
     def get_images(self, obj) -> ImagesFromProductSerializer(many=True).data:
         return ImagesFromProductSerializer(obj.images.all(), many=True,
