@@ -56,10 +56,10 @@ class ProductFiltersOrderingView(APIView):
                         "name": "-price",
                     },
                     {
-                        "name": "views",
+                        "name": "-views",
                     },
                     {
-                        "name": "rating",
+                        "name": "-rating",
                     },
                 ]
             }).data,
